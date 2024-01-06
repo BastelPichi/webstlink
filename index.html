@@ -75,7 +75,7 @@
       <input type="number" id="memoryReadSize" title="Number of bytes to read (decimal)" min="1" value="1000" />
       <textarea id="memoryContents" rows="10" readonly></textarea>
       Flash address (hex):
-      <input type="text" id="flashWriteAddress" title="Flash address to write to (hex)" size="10" pattern="0x[A-Fa-f0-9]+" required/>
+      <input type="text" id="flashWriteAddress" title="Flash address to write to (hex)" size="10" pattern="0x[A-Fa-f0-9]+" value="0x08000000" required/>
       Firmware binary:
       <input type="file" id="flashBinaryFile" required/>
       <button id="flash" disabled>Flash</button>  
