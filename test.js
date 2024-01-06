@@ -190,7 +190,18 @@ document.addEventListener('DOMContentLoaded', event => {
     let logger = new libstlink.Logger(2, log);
     
     let connectButton = document.querySelector("#connect");
+    let runHaltButton = document.querySelector("#runHalt");
     let flashButton = document.querySelector("#flash");
+
+    runHaltButton.addEventListener('click', async function() {
+        if (stlink !== null && stlink.connected) {
+            if (stlink.last_cpu_status.halted) {
+                await stlink.run();
+            } else {
+                await stlink.halt();
+            }
+        }
+    });
 
     window.setInterval(function() {
         log.scrollTop = log.scrollHeight;
@@ -245,10 +256,14 @@ document.addEventListener('DOMContentLoaded', event => {
         if (status.debug) {
             if (status.halted) {
                 flashButton.disabled = false;
+                runHaltButton.textContent = "Run";
             } else {
                 flashButton.disabled = false;
+                runHaltButton.textContent = "Halt";
             }
+            runHaltButton.disabled = false;
         } else {
+            runHaltButton.disabled = true;
             flashButton.disabled = true;
         }
     }
@@ -310,6 +325,7 @@ document.addEventListener('DOMContentLoaded', event => {
         connectButton.textContent = "Connect";
 
         flashButton.disabled = true;
+        runHaltButton.disabled = true;
 
         let probeInfo = document.getElementById("probeInfo");
         let summary = probeInfo.querySelector("summary");
