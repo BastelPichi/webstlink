@@ -86,10 +86,12 @@ class Flash {
 
     async unlock() {
         await this._driver.core_halt();
+        console.log("unlock function");
         // programming locked
         let cr_reg = await this._stlink.get_debugreg32(this.FLASH_CR_REG);
         if (cr_reg & FLASH_CR_LOCK_BIT) {
             // unlock keys
+            console.log("trying to unlock chip");
             await this._stlink.set_debugreg32(this.FLASH_KEYR_REG, 0x45670123);
             await this._stlink.set_debugreg32(this.FLASH_KEYR_REG, 0xcdef89ab);
         }
